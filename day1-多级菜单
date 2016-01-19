@@ -1,0 +1,71 @@
+# -*- coding:utf-8 -*-
+#第一级菜单
+city=["上海","北京","南京"]
+#第二级菜单
+city_zone_shanghai=["虹口区","静安区","杨浦区"]
+city_zone_beijing=["东城区","西城区","朝阳区"]
+city_zone_nanjing=["鼓楼区","玄武区","雨花台"]
+city_zone=[city_zone_shanghai,city_zone_beijing,city_zone_nanjing]
+#第三级菜单
+street_zone_hongkou=["广中路","江湾镇","新港路"]
+street_zone_jingan=["静安寺","曹家渡","江宁路"]
+street_zone_yangpu=["江浦路","控江路","五角场"]
+street_zone_dongcheng=["东华门","建国门","朝阳门"]
+street_zone_xicheng=["西长安街","新街口","展览路"]
+street_zone_chaoyang=["亚运村","三里屯","奥运村"]
+street_zone_gulou=["华侨路","宁海路","中央门"]
+street_zone_xuanwu=["玄武湖","玄武门","孝陵卫"]
+street_zone_yuhuatai=["乌龙","斗南","洛龙"]
+street_zone_shanghai=[street_zone_hongkou,street_zone_jingan,street_zone_yangpu]
+street_zone_beijing=[street_zone_dongcheng,street_zone_xicheng,street_zone_chaoyang]
+street_zone_nanjing=[street_zone_gulou,street_zone_xuanwu,street_zone_yuhuatai]
+street_zone=[street_zone_shanghai,street_zone_beijing,street_zone_nanjing]
+#用户数字的选择
+input_count = 0
+while  input_count < 5:
+    count = 1
+    for i in range(int(len(city))):
+        print(str(count)+":"+city[i])
+        count = count+1
+    city_num = input("请输入:")
+    if city_num == "q":
+        print("欢迎使用，再见~")
+        exit()
+    elif int(city_num) in range(1,int(len(city_zone)+1)):
+        zone=city_zone[int(city_num)-1]
+        while True:
+            count = 1
+            for i in range(int(len(zone))):
+                print(str(count)+":"+zone[i])
+                count = count+1
+            city_zone_num = input("请输入:")
+            if city_zone_num == "q":
+                print("欢迎使用，再见~")
+                exit()
+            elif city_zone_num == "b":
+                break
+            elif int(city_zone_num) in range(1,int(len(zone))+1):
+               street =(street_zone[int(city_num)-1][int(city_zone_num)-1])
+
+               while True:
+                   count = 1
+                   for i in range(int(len(street))):
+                        print(str(count)+":"+street[i])
+                        count = count+1
+                   street_num = input("请输入:")
+                   if street_num == "q":
+                        print("欢迎使用，再见~")
+                        exit()
+                   elif street_num == "b":
+                        break
+                   elif int(street_num) in range(1,int(len(street))+1):
+                        print("欢迎来到"+ street[int(street_num)-1]+"街道" )
+                   else:
+                        print("输入的数字有误，请重新输入")
+            else:
+                print("输入的数字有误，请重新输入")
+    else:
+        print("输入的数字有误，请重新输入")
+        input_count= input_count +1
+else:
+    print("输入错误次数达到5次，程序自动退出")
