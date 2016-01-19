@@ -1,5 +1,6 @@
 # -*- coding:utf-8 -*-
 #读取用户名,密码,锁定用户文件
+#需要创建3个文件 user password lock
 user=[]
 passwd=[]
 user_lock=[]
@@ -49,3 +50,5 @@ while user_input_count < 3:
             print("用户名不正确，请重新输入")
             user_input_count = user_input_count+1
 print("用户名错误三次，程序退出。。。")
+
+
