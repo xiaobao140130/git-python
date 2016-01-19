@@ -1,0 +1,51 @@
+# -*- coding:utf-8 -*-
+#读取用户名,密码,锁定用户文件
+user=[]
+passwd=[]
+user_lock=[]
+f_user=open("user","r")
+for line in f_user:
+    user.append(line.strip())
+f_user.close()
+f_passwd=open("password","r")
+for line in f_passwd:
+    passwd.append(line.strip())
+f_passwd.close()
+f_user_lock=open("lock","r")
+for line in f_user_lock:
+    user_lock.append(line.strip())
+f_user_lock.close()
+#进行用户名的判断
+user_input_count = 0
+passwd_input_count = 0
+while user_input_count < 3:
+    user_input=input("请输入用户名:")
+    if user_input in user_lock:
+        print(str(user_input)+ "已经被锁定，程序退出")
+        exit()
+    else:
+        if user_input in user:
+#进行密码的第一次判断，是否在列表范围内
+            while passwd_input_count < 3:
+                passwd_input=input("请输入密码:")
+                if passwd_input in passwd:
+#进行密码的第二次判断，是否和用户名匹配
+                    if user.index(user_input) == passwd.index(passwd_input):
+                        print("认证通过，欢迎使用")
+                        exit()
+                    else:
+                        print("密码输入错误，请重新输入，错误次数为:" + str(passwd_input_count+1))
+                        passwd_input_count = passwd_input_count +1
+                else:
+                     print("密码输入错误，请重新输入，错误次数为:" + str(passwd_input_count+1))
+                     passwd_input_count = passwd_input_count +1
+            print("密码错误三次，"+ user_input +"用户已经被锁定，程序退出")
+#进行用户名的锁定
+            f_user_lock=open("lock","a")
+            f_user_lock.write(str(user_input)+"\n")
+            f_user_lock.close()
+            exit()
+        else:
+            print("用户名不正确，请重新输入")
+            user_input_count = user_input_count+1
+print("用户名错误三次，程序退出。。。")
