@@ -1,0 +1,61 @@
+#！/usr/bin/env python
+#-*- coding:utf-8 -*-
+#需要haproxy的文件
+import json,re,collections
+while True:
+    obj = collections.OrderedDict()
+    obj['1.'] = 'Display Record'
+    obj['2.'] = 'Add Record'
+    obj['3.'] = 'Delete Record'
+    for k,v in obj.items():
+        print(k,v)
+    choose = input("Please input number(q:exit):")
+    if choose == 'q':
+        exit('Good Bye')
+    elif choose == '1':
+        s1_choose = input('Please input backend:')
+        s1_backend = 'backend %s'% s1_choose
+        with open('haproxy','r+') as f:
+            s1_read = f.readlines()
+        count_m = 0
+        while count_m < len(s1_read):
+            if  re.match(s1_backend,s1_read[count_m]):
+                ii = 1
+                print(s1_backend)
+                while True:
+                    if len(s1_read[count_m+ii]) > 1:
+                        print(s1_read[count_m+ii].strip())
+                        ii += 1
+                    elif len(s1_read[count_m+ii]) == 1:
+                        break
+                count_m += 1
+            else:
+                count_m += 1
+        print('Record was displaying!!')
+        continue
+    elif choose == '2':
+        s_input = input("Please input backend:")
+        s_dic = json.loads(s_input)
+        backend = s_dic['backend']
+        server = s_dic['record']['server']
+        weight = s_dic['record']['weight']
+        maxconn = s_dic['record']['maxconn']
+        with open('haproxy','r+') as f:
+            s = f.readlines()
+        s1 = 'backend %s'% backend
+        count_n = 0
+        while count_n < len(s):
+            if  re.match(s1,s[count_n]):
+                sss = '        server %s %s weight %s maxconn %s\n' %\
+                      (server,server,weight,maxconn)
+                s.insert(count_n+2,sss)
+                with open('haproxy','w') as f:
+                    f.writelines(s)
+                count_n += 1
+            else:
+                count_n += 1
+        print('Record was adding!!')
+        continue
+    elif choose == '3':
+        print('developing....!!')
+        continue
